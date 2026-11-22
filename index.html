@@ -242,50 +242,11 @@ footer {
       <span class="category">LATEST POSTS</span>
     </div>
 
-    <div class="articles">
 
-      <article class="card">
-  
+<div class="articles" id="article-list">
+  <p>正在加载文章...</p>
+</div>
 
-  <h3>
-    <div class="category">TECH · 科技</div>
-    
-<a href="post.html?file=posts/my-first-article.md" class="card">
-
-
-  <div class="category">TECH · 科技</div>
-
-  <h3>我的第一篇文章</h3>
-
-  <p>关于 AI 技术、未来趋势，以及普通人如何拥抱技术变化。</p>
-
-  <div class="date">2026 · TECHNOLOGY</div>
-</a>
-
-  </article>
-
-      <article class="card">
-        <div class="category">LIFE · 生活</div>
-        <h3>关于生活的一些思考</h3>
-        <p>记录日常生活中的观察，以及那些值得反复思考的问题。</p>
-        <div class="date">2026 · LIFE</div>
-      </article>
-
-      <article class="card">
-        <div class="category">THOUGHTS · 思考</div>
-        <h3>为什么我们需要独立思考</h3>
-        <p>在信息越来越多的时代，保持判断力是一件重要的事情。</p>
-        <div class="date">2026 · THINKING</div>
-      </article>
-
-      <article class="card">
-        <div class="category">NOTES · 随笔</div>
-        <h3>写给未来的自己</h3>
-        <p>记录此刻的想法，也记录未来回头看时的自己。</p>
-        <div class="date">2026 · NOTES</div>
-      </article>
-
-    </div>
   </section>
 
   <section class="about" id="about">
@@ -304,6 +265,77 @@ footer {
   <br>
   Made with curiosity.
 </footer>
+
+<script>
+async function loadArticles() {
+  const container = document.getElementById("article-list");
+
+  try {
+    const response = await fetch("posts.json");
+
+    if (!response.ok) {
+      throw new Error("无法读取 posts.json");
+    }
+
+    const posts = await response.json();
+
+    if (!Array.isArray(posts)) {
+      throw new Error("文章清单格式不正确");
+    }
+
+    container.replaceChildren();
+
+    posts.forEach(post => {
+      if (
+        typeof post.file !== "string" ||
+        !post.file.startsWith("posts/") ||
+        post.file.includes("..") ||
+        !/\.(md|html)$/i.test(post.file)
+      ) {
+        return;
+      }
+
+      const card = document.createElement("a");
+      card.className = "card";
+
+      if (post.file.endsWith(".md")) {
+        card.href = "post.html?file=" + encodeURIComponent(post.file);
+      } else {
+        card.href = post.file;
+      }
+
+      const category = document.createElement("div");
+      category.className = "category";
+      category.textContent = post.category || "随笔";
+
+      const title = document.createElement("h3");
+      title.textContent = post.title || "未命名文章";
+
+      const description = document.createElement("p");
+      description.textContent = post.description || "";
+
+      const date = document.createElement("div");
+      date.className = "date";
+      date.textContent = post.date || "";
+
+      card.append(category, title, description, date);
+      container.appendChild(card);
+    });
+
+    if (container.children.length === 0) {
+      container.textContent = "暂时还没有文章。";
+    }
+
+  } catch (error) {
+    console.error(error);
+    container.textContent = "文章加载失败，请检查 posts.json 文件。";
+  }
+}
+
+loadArticles();
+</script>
+</body>
+</html>
 
 </body>
 </html>
