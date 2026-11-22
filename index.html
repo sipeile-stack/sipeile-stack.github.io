@@ -127,6 +127,16 @@ nav a:hover {
   font-size: 22px;
   margin: 16px 0 12px;
 }
+  .card h3 a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card h3 a:hover {
+  color: #a17b51;
+  text-decoration: underline;
+}
 
 .card p {
   color: #888;
@@ -223,12 +233,19 @@ footer {
 
     <div class="articles">
 
-      <a href="posts/ai-and-our-life.html" class="card">
-        <div class="category">TECH · 科技</div>
-        <h3>人工智能正在改变我们的生活</h3>
-        <p>关于 AI 技术、未来趋势，以及普通人如何拥抱技术变化。</p>
-        <div class="date">2026 · TECHNOLOGY</div>
-      </a>
+      <article class="card">
+  <div class="category">TECH · 科技</div>
+
+  <h3>
+    <a href="posts/ai-and-our-life.html">
+      人工智能正在改变我们的生活
+    </a>
+  </h3>
+
+  <p>关于 AI 技术、未来趋势，以及普通人如何拥抱技术变化。</p>
+
+  <div class="date">2026 · TECHNOLOGY</div>
+  </article>
 
       <article class="card">
         <div class="category">LIFE · 生活</div>
