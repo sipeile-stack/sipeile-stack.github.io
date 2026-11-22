@@ -103,6 +103,66 @@ nav a:hover {
   grid-template-columns: repeat(2, 1fr);
   gap: 22px;
 }
+  
+.search-area {
+  margin-bottom: 30px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #eeeae3;
+  border-radius: 8px;
+  padding: 13px 18px;
+  margin-bottom: 20px;
+}
+
+.search-box span {
+  font-size: 24px;
+  color: #a17b51;
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #252525;
+  font-family: inherit;
+}
+
+.search-box input::placeholder {
+  color: #aaa;
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  border: 1px solid #e9e6df;
+  background: transparent;
+  color: #777;
+  padding: 7px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .2s;
+  font-family: inherit;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: #a17b51;
+  border-color: #a17b51;
+  color: #fff;
+}
+
 
 .card {
   background: #fff;
@@ -242,6 +302,27 @@ footer {
       <span class="category">LATEST POSTS</span>
     </div>
 
+
+<div class="search-area">
+
+  <div class="search-box">
+    <span>⌕</span>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="搜索文章标题或关键词..."
+    >
+  </div>
+
+  <div class="category-filters" id="category-filters">
+    <button class="filter-btn active" data-category="全部">全部</button>
+    <button class="filter-btn" data-category="科技">科技</button>
+    <button class="filter-btn" data-category="生活">生活</button>
+    <button class="filter-btn" data-category="思考">思考</button>
+    <button class="filter-btn" data-category="随笔">随笔</button>
+  </div>
+
+</div>
 
 <div class="articles" id="article-list">
   <p>正在加载文章...</p>
