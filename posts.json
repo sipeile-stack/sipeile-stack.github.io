@@ -1,1 +1,18 @@
 
+[
+  {
+    "title": "我的第一篇文章",
+    "category": "随笔",
+    "date": "2026-11-22",
+    "description": "记录生活、科技探索和独立思考。",
+    "file": "posts/my-first-article.md"
+  },
+  {
+    "title": "人工智能正在改变我们的生活",
+    "category": "科技",
+    "date": "2026-11-22",
+    "description": "关于人工智能、技术发展与未来生活的一些思考。",
+    "file": "posts/ai-and-our-life.html"
+  }
+]
+
