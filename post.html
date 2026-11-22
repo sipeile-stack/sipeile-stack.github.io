@@ -143,6 +143,12 @@ footer {
   transition: width .1s linear;
 }
 
+  #reading-time {
+  color: #a17b51;
+  font-size: 13px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
 
 </style>
 </head>
@@ -161,9 +167,11 @@ footer {
     SPL JOURNAL · PERSONAL BLOG
   </div>
 
-  <article id="content">
-    正在加载文章……
-  </article>
+  <div id="reading-time"></div>
+
+<article id="content">
+  正在加载文章……
+</article>
 
   <a class="back" href="index.html">
     ← 返回博客首页
@@ -213,6 +221,25 @@ async function loadArticle() {
     const html = marked.parse(markdown);
 
     content.innerHTML = DOMPurify.sanitize(html);
+    const textContent = content.innerText;
+
+const chineseCharacters = (
+  textContent.match(/[\u4e00-\u9fff]/g) || []
+).length;
+
+const englishWords = (
+  textContent.match(/[a-zA-Z0-9]+/g) || []
+).length;
+
+const totalWords = chineseCharacters + englishWords;
+
+const readingMinutes = Math.max(
+  1,
+  Math.ceil(totalWords / 300)
+);
+
+document.getElementById("reading-time").textContent =
+  "预计阅读 " + readingMinutes + " 分钟";
 
   } catch (error) {
 
