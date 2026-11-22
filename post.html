@@ -238,6 +238,10 @@ footer {
   
 async function loadPostNavigation(currentFile) {
   const navigation = document.getElementById("post-navigation");
+  if (!navigation) {
+  console.error("找不到 post-navigation 导航容器");
+  return;
+}
 
   try {
     const response = await fetch("posts.json");
