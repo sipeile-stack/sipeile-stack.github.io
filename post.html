@@ -1,1 +1,221 @@
 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SPL JOURNAL | Article</title>
+
+<!-- Markdown 转换工具 -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- HTML 安全过滤工具 -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #faf9f6;
+  color: #292929;
+  font-family: -apple-system, BlinkMacSystemFont,
+  "PingFang SC", sans-serif;
+  line-height: 1.9;
+}
+
+header {
+  max-width: 900px;
+  margin: auto;
+  padding: 28px 24px;
+  border-bottom: 1px solid #e9e6df;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #222;
+}
+
+main {
+  max-width: 760px;
+  margin: 75px auto;
+  padding: 0 24px;
+  min-height: 60vh;
+}
+
+.eyebrow {
+  color: #a17b51;
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+}
+
+#content h1 {
+  font-size: clamp(32px, 6vw, 46px);
+  line-height: 1.4;
+  margin-bottom: 35px;
+}
+
+#content h2 {
+  font-size: 25px;
+  margin-top: 45px;
+}
+
+#content h3 {
+  margin-top: 35px;
+}
+
+#content p {
+  font-size: 17px;
+  margin: 22px 0;
+}
+
+#content a {
+  color: #a17b51;
+}
+
+#content img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+#content blockquote {
+  border-left: 3px solid #a17b51;
+  padding-left: 20px;
+  color: #777;
+  margin: 25px 0;
+}
+
+#content pre {
+  background: #efede8;
+  padding: 18px;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+#content code {
+  background: #efede8;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+#content hr {
+  border: 0;
+  border-top: 1px solid #e9e6df;
+  margin: 35px 0;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 50px;
+  color: #a17b51;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 20px;
+  border-top: 1px solid #e9e6df;
+  color: #999;
+  font-size: 13px;
+}
+
+.error {
+  color: #a33;
+  padding: 20px;
+  background: #fff0f0;
+  border-radius: 8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">
+    SPL JOURNAL.
+  </a>
+</header>
+
+<main>
+
+  <div class="eyebrow">
+    SPL JOURNAL · PERSONAL BLOG
+  </div>
+
+  <article id="content">
+    正在加载文章……
+  </article>
+
+  <a class="back" href="index.html">
+    ← 返回博客首页
+  </a>
+
+</main>
+
+<footer>
+  © 2026 SPL JOURNAL. ALL RIGHTS RESERVED.
+  <br>
+  A JOURNAL OF THOUGHTS.
+</footer>
+
+<script>
+async function loadArticle() {
+
+  const content = document.getElementById("content");
+
+  try {
+
+    const params = new URLSearchParams(location.search);
+    const file = params.get("file");
+
+    if (
+      !file ||
+      !file.startsWith("posts/") ||
+      !file.endsWith(".md") ||
+      file.includes("..")
+    ) {
+      throw new Error("文章地址不正确");
+    }
+
+    const response = await fetch(file);
+
+    if (!response.ok) {
+      throw new Error("没有找到文章文件");
+    }
+
+    const markdown = await response.text();
+
+    const titleMatch = markdown.match(/^#\s+(.+)$/m);
+
+    if (titleMatch) {
+      document.title = titleMatch[1] + " | SPL JOURNAL";
+    }
+
+    const html = marked.parse(markdown);
+
+    content.innerHTML = DOMPurify.sanitize(html);
+
+  } catch (error) {
+
+    content.innerHTML =
+      '<div class="error">' +
+      '文章加载失败：' + error.message +
+      '<br>请检查文章文件是否存在，以及网络是否正常。' +
+      '</div>';
+
+  }
+}
+
+loadArticle();
+</script>
+
+</body>
+</html>
+
