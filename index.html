@@ -347,7 +347,11 @@ footer {
   Made with curiosity.
 </footer>
 
+
 <script>
+let allPosts = [];
+let currentCategory = "全部";
+
 async function loadArticles() {
   const container = document.getElementById("article-list");
 
@@ -364,48 +368,14 @@ async function loadArticles() {
       throw new Error("文章清单格式不正确");
     }
 
-    container.replaceChildren();
+    allPosts = posts.filter(post =>
+      typeof post.file === "string" &&
+      post.file.startsWith("posts/") &&
+      !post.file.includes("..") &&
+      /\.(md|html)$/i.test(post.file)
+    );
 
-    posts.forEach(post => {
-      if (
-        typeof post.file !== "string" ||
-        !post.file.startsWith("posts/") ||
-        post.file.includes("..") ||
-        !/\.(md|html)$/i.test(post.file)
-      ) {
-        return;
-      }
-
-      const card = document.createElement("a");
-      card.className = "card";
-
-      if (post.file.endsWith(".md")) {
-        card.href = "post.html?file=" + encodeURIComponent(post.file);
-      } else {
-        card.href = post.file;
-      }
-
-      const category = document.createElement("div");
-      category.className = "category";
-      category.textContent = post.category || "随笔";
-
-      const title = document.createElement("h3");
-      title.textContent = post.title || "未命名文章";
-
-      const description = document.createElement("p");
-      description.textContent = post.description || "";
-
-      const date = document.createElement("div");
-      date.className = "date";
-      date.textContent = post.date || "";
-
-      card.append(category, title, description, date);
-      container.appendChild(card);
-    });
-
-    if (container.children.length === 0) {
-      container.textContent = "暂时还没有文章。";
-    }
+    renderArticles();
 
   } catch (error) {
     console.error(error);
@@ -413,10 +383,91 @@ async function loadArticles() {
   }
 }
 
+function renderArticles() {
+  const container = document.getElementById("article-list");
+  const keyword = document
+    .getElementById("search-input")
+    .value
+    .trim()
+    .toLowerCase();
+
+  container.replaceChildren();
+
+  const filteredPosts = allPosts.filter(post => {
+    const matchesCategory =
+      currentCategory === "全部" ||
+      post.category === currentCategory;
+
+    const searchableText = [
+      post.title,
+      post.category,
+      post.description
+    ].join(" ").toLowerCase();
+
+    const matchesKeyword = searchableText.includes(keyword);
+
+    return matchesCategory && matchesKeyword;
+  });
+
+  if (filteredPosts.length === 0) {
+    container.textContent = "没有找到相关文章。";
+    return;
+  }
+
+  filteredPosts.forEach(post => {
+    const card = document.createElement("a");
+    card.className = "card";
+
+    card.href = post.file.endsWith(".md")
+      ? "post.html?file=" + encodeURIComponent(post.file)
+      : post.file;
+
+    const category = document.createElement("div");
+    category.className = "category";
+    category.textContent = post.category || "随笔";
+
+    const title = document.createElement("h3");
+    title.textContent = post.title || "未命名文章";
+
+    const description = document.createElement("p");
+    description.textContent = post.description || "";
+
+    const date = document.createElement("div");
+    date.className = "date";
+    date.textContent = post.date || "";
+
+    card.append(category, title, description, date);
+    container.appendChild(card);
+  });
+}
+
+document.getElementById("search-input").addEventListener(
+  "input",
+  renderArticles
+);
+
+document.getElementById("category-filters").addEventListener(
+  "click",
+  event => {
+    const button = event.target.closest(".filter-btn");
+
+    if (!button) return;
+
+    currentCategory = button.dataset.category;
+
+    document.querySelectorAll(".filter-btn").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    renderArticles();
+  }
+);
+
 loadArticles();
 </script>
 </body>
 </html>
+
 
 </body>
 </html>
