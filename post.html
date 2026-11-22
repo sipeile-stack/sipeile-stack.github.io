@@ -149,6 +149,53 @@ footer {
   margin-bottom: 20px;
   letter-spacing: 0.5px;
 }
+  
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 65px;
+  padding: 25px 0;
+  border-top: 1px solid #e9e6df;
+  border-bottom: 1px solid #e9e6df;
+}
+
+.post-navigation a {
+  color: #252525;
+  text-decoration: none;
+  max-width: 48%;
+}
+
+.post-navigation a:last-child {
+  text-align: right;
+  margin-left: auto;
+}
+
+.post-navigation span {
+  display: block;
+  color: #a17b51;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.post-navigation strong {
+  font-size: 15px;
+}
+
+.post-navigation a:hover strong {
+  color: #a17b51;
+}
+
+@media (max-width: 500px) {
+  .post-navigation {
+    gap: 12px;
+  }
+
+  .post-navigation strong {
+    font-size: 13px;
+  }
+}
+
 
 </style>
 </head>
@@ -173,6 +220,8 @@ footer {
   正在加载文章……
 </article>
 
+<nav class="post-navigation" id="post-navigation"></nav>
+
   <a class="back" href="index.html">
     ← 返回博客首页
   </a>
@@ -186,7 +235,67 @@ footer {
 </footer>
 
 <script>
+  
+async function loadPostNavigation(currentFile) {
+  const navigation = document.getElementById("post-navigation");
+
+  try {
+    const response = await fetch("posts.json");
+
+    if (!response.ok) {
+      throw new Error("无法读取文章清单");
+    }
+
+    const posts = await response.json();
+
+    const validPosts = posts.filter(post =>
+      typeof post.file === "string" &&
+      post.file.startsWith("posts/") &&
+      !post.file.includes("..") &&
+      /\.(md|html)$/i.test(post.file)
+    );
+
+    const index = validPosts.findIndex(
+      post => post.file === currentFile
+    );
+
+    if (index === -1) return;
+
+    const previous = validPosts[index - 1];
+    const next = validPosts[index + 1];
+
+    function createLink(post, label) {
+      if (!post) return null;
+
+      const link = document.createElement("a");
+
+      link.href = post.file.endsWith(".md")
+        ? "post.html?file=" + encodeURIComponent(post.file)
+        : post.file;
+
+      const span = document.createElement("span");
+      span.textContent = label;
+
+      const strong = document.createElement("strong");
+      strong.textContent = post.title || "未命名文章";
+
+      link.append(span, strong);
+      return link;
+    }
+
+    const previousLink = createLink(previous, "← 上一篇");
+    const nextLink = createLink(next, "下一篇 →");
+
+    if (previousLink) navigation.appendChild(previousLink);
+    if (nextLink) navigation.appendChild(nextLink);
+
+  } catch (error) {
+    console.error("文章导航加载失败：", error);
+  }
+}
+
 async function loadArticle() {
+  
 
   const content = document.getElementById("content");
 
@@ -194,6 +303,7 @@ async function loadArticle() {
 
     const params = new URLSearchParams(location.search);
     const file = params.get("file");
+    loadPostNavigation(file);
 
     if (
       !file ||
