@@ -543,9 +543,18 @@ function renderFeaturedArticle() {
   date.textContent = featuredPost.date || "";
 
   link.append(category, title, description, date);
-  section.append(label, link);
+  const image = document.createElement("img");
+image.className = "featured-image";
+image.src = "images/ai-featured.jpg";
+image.alt = featuredPost.title || "精选文章封面";
 
-  container.appendChild(section);
+const content = document.createElement("div");
+content.className = "featured-content";
+
+content.append(label, link);
+section.append(image, content);
+
+container.appendChild(section);
 }
 
 function renderArticles() {
