@@ -591,8 +591,11 @@ function renderFeaturedArticle() {
   const date = document.createElement("div");
   date.className = "featured-date";
   date.textContent = featuredPost.date || "";
+  const readMore = document.createElement("div");
+readMore.className = "featured-read-more";
+readMore.textContent = "阅读文章 →";
 
-  link.append(category, title, description, date);
+  link.append(category, title, description, date, readMore);
   const image = document.createElement("img");
 image.className = "featured-image";
 image.src = "images/ai-featured.jpg";
