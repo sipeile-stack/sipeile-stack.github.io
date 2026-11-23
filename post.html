@@ -433,10 +433,12 @@ tocToggle.addEventListener("click", () => {
   tocArrow.textContent = isHidden ? "−" : "+";
 });
   function updateActiveHeading() {
-  let currentHeading = null;
+  let currentHeading = headings[0];
 
   headings.forEach(heading => {
-    if (heading.getBoundingClientRect().top < 250) {
+    const position = heading.getBoundingClientRect().top;
+
+    if (position <= window.innerHeight * 0.4) {
       currentHeading = heading;
     }
   });
