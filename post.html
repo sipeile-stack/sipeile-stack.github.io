@@ -248,6 +248,31 @@ footer {
   padding-left: 18px;
 }
 
+  /* 右侧悬浮文章目录 */
+@media (min-width: 1351px) {
+  .table-of-contents {
+    position: fixed;
+    top: 110px;
+    right: 25px;
+    width: 230px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    z-index: 1000;
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* 平板和手机恢复普通布局 */
+@media (max-width: 1350px) {
+  .table-of-contents {
+    position: static;
+    width: auto;
+    max-height: none;
+    box-shadow: none;
+  }
+}
+
 </style>
 </head>
 
