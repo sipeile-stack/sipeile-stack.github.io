@@ -576,6 +576,25 @@ document.getElementById("reading-time").textContent =
 }
 
 loadArticle();
+  // 返回顶部按钮
+const backToTop = document.getElementById("back-to-top");
+
+// 滚动时控制按钮显示
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 400) {
+    backToTop.style.display = "block";
+  } else {
+    backToTop.style.display = "none";
+  }
+});
+
+// 点击按钮，平滑返回顶部
+backToTop.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
   
 function updateReadingProgress() {
   const progressBar = document.getElementById("reading-progress");
