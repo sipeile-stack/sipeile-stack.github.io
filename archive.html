@@ -230,8 +230,11 @@ async function loadArchive() {
         const section = document.createElement("section");
 
         const heading = document.createElement("h2");
-        heading.className = "year";
-        heading.textContent = year;
+heading.className = "year";
+
+const count = groups[year].length;
+
+heading.textContent = year + " · " + count + " 篇文章";
 
         section.appendChild(heading);
 
