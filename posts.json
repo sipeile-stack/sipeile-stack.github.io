@@ -12,7 +12,8 @@
     "category": "科技",
     "date": "2026-11-22",
     "description": "关于人工智能、技术发展与未来生活的一些思考。",
-    "file": "posts/ai-and-our-life.md"
+    "file": "posts/ai-and-our-life.md",
+    "featured": true
   }
 
 
