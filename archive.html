@@ -262,7 +262,11 @@ date.textContent = monthDay.replace("-", ".");
           category.className = "archive-category";
           category.textContent = post.category || "随笔";
 
-          content.append(link, category);
+          const description = document.createElement("p");
+description.className = "archive-description";
+description.textContent = post.description || "";
+
+content.append(link, category, description);
           item.append(date, content);
           section.appendChild(item);
         });
