@@ -388,6 +388,45 @@ body.dark-mode #theme-toggle {
   background: #80603f;
 }
 
+/* 文章字体调节按钮 */
+#font-controls {
+  position: fixed;
+  right: 30px;
+  bottom: 140px;
+  display: flex;
+  gap: 6px;
+  z-index: 99999;
+}
+
+#font-controls button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 18px;
+  background: #f7f5f0;
+  color: #252525;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  transition: background 0.3s ease;
+}
+
+#font-controls button:hover {
+  background: #a17b51;
+  color: #ffffff;
+}
+
+/* 暗色模式下的字体调节按钮 */
+body.dark-mode #font-controls button {
+  background: #333333;
+  color: #eeeeee;
+}
+
+body.dark-mode #font-controls button:hover {
+  background: #a17b51;
+  color: #ffffff;
+}
+
 </style>
 </head>
 
