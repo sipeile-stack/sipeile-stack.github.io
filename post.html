@@ -321,6 +321,65 @@ html {
   transition: background 0.3s ease;
 }
 
+/* SPL JOURNAL 暗色阅读模式 */
+body.dark-mode {
+  background: #1c1c1c;
+  color: #e5e5e5;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* 文章正文 */
+body.dark-mode #content {
+  color: #e0e0e0;
+}
+
+body.dark-mode #content h1,
+body.dark-mode #content h2,
+body.dark-mode #content h3,
+body.dark-mode #content strong {
+  color: #f2f2f2;
+}
+
+/* 文章目录 */
+body.dark-mode .table-of-contents {
+  background: #292929;
+  border-left-color: #a17b51;
+}
+
+body.dark-mode .toc-title {
+  color: #f2f2f2;
+}
+
+body.dark-mode .table-of-contents a {
+  color: #bdbdbd;
+}
+
+body.dark-mode .table-of-contents a.active,
+body.dark-mode .table-of-contents a:hover {
+  color: #c49a70;
+}
+
+/* 阅读时间 */
+body.dark-mode #reading-time {
+  color: #c49a70;
+}
+
+/* 上一篇、下一篇 */
+body.dark-mode .post-navigation a {
+  color: #e0e0e0;
+}
+
+/* 页面链接 */
+body.dark-mode a {
+  transition: color 0.3s ease;
+}
+
+/* 暗色模式下的切换按钮 */
+body.dark-mode #theme-toggle {
+  background: #e5e5e5;
+  color: #252525;
+}
+
 #theme-toggle:hover {
   background: #a17b51;
 }
