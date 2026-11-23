@@ -726,6 +726,7 @@ function initFontControls() {
   updateFontSize();
 
   decrease.addEventListener("click", () => {
+    console.log("缩小字体按钮已点击");
     fontSize = Math.max(12, fontSize - 1);
     updateFontSize();
   });
