@@ -811,6 +811,72 @@ document.getElementById("reading-time").textContent =
 
 loadArticle();
 
+  // SPL JOURNAL 文章收藏功能
+function initFavorite() {
+  const favoriteToggle =
+    document.getElementById("favorite-toggle");
+
+  if (!favoriteToggle) {
+    console.error("找不到收藏按钮");
+    return;
+  }
+
+  const params = new URLSearchParams(location.search);
+  const file = params.get("file");
+
+  if (!file) return;
+
+  const storageKey = "spl-favorites";
+
+  function getFavorites() {
+    try {
+      return JSON.parse(
+        localStorage.getItem(storageKey) || "[]"
+      );
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function updateButton() {
+    const favorites = getFavorites();
+    const isFavorite = favorites.includes(file);
+
+    favoriteToggle.textContent =
+      isFavorite ? "★ 已收藏" : "☆ 收藏";
+
+    favoriteToggle.classList.toggle(
+      "is-favorite",
+      isFavorite
+    );
+  }
+
+  favoriteToggle.addEventListener("click", () => {
+    let favorites = getFavorites();
+
+    if (favorites.includes(file)) {
+      favorites = favorites.filter(item => item !== file);
+    } else {
+      favorites.push(file);
+    }
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(favorites)
+    );
+
+    updateButton();
+  });
+
+  updateButton();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFavorite);
+} else {
+  initFavorite();
+}
+
 // 专注阅读模式
 function initFocusMode() {
   const focusToggle = document.getElementById("focus-toggle");
