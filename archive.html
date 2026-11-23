@@ -243,8 +243,10 @@ heading.textContent = year + " · " + count + " 篇文章";
           item.className = "archive-item";
 
           const date = document.createElement("div");
-          date.className = "archive-date";
-          date.textContent = post.date;
+date.className = "archive-date";
+
+const monthDay = post.date.slice(5);
+date.textContent = monthDay.replace("-", ".");
 
           const content = document.createElement("div");
 
