@@ -702,6 +702,11 @@ async function loadArticles() {
   !post.file.includes("..") &&
   /\.(md|html)$/i.test(post.file)
 );
+    const totalElement = document.getElementById("article-total");
+
+if (totalElement) {
+  totalElement.textContent = String(allPosts.length).padStart(2, "0");
+}
 
 renderFeaturedArticle();
 renderArticles();
