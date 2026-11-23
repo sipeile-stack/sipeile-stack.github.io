@@ -478,6 +478,28 @@ body.dark-mode #focus-toggle:hover {
   color: #ffffff;
 }
 
+/* SPL JOURNAL 专注阅读模式 */
+body.focus-mode .table-of-contents,
+body.focus-mode #font-controls,
+body.focus-mode #theme-toggle,
+body.focus-mode #back-to-top,
+body.focus-mode #focus-toggle,
+body.focus-mode .post-navigation {
+  display: none !important;
+}
+
+/* 专注模式下扩大文章阅读区域 */
+body.focus-mode #content {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 专注模式下隐藏顶部和其他页面装饰 */
+body.focus-mode #reading-progress {
+  display: none;
+}
+
 
 </style>
 </head>
