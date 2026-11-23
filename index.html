@@ -849,9 +849,20 @@ function renderArticles() {
     const description = document.createElement("p");
     description.textContent = post.description || "";
 
-    const date = document.createElement("div");
-    date.className = "date";
-    date.textContent = post.date || "";
+   const date = document.createElement("div");
+date.className = "date";
+
+if (post.date) {
+  const articleDate = new Date(post.date + "T00:00:00");
+
+  date.textContent = articleDate.toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric"
+  }).toUpperCase();
+} else {
+  date.textContent = "";
+}
 
     card.append(category, title, description, date);
     container.appendChild(card);
