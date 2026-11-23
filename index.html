@@ -138,10 +138,27 @@ nav a:hover {
   font-size: 23px;
 }
 
+/* 首页文章网格 */
 .articles {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+/* 平板：两栏布局 */
+@media (max-width: 1000px) {
+  .articles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+}
+
+/* 手机：单栏布局 */
+@media (max-width: 600px) {
+  .articles {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
 }
   
 .search-area {
