@@ -385,6 +385,17 @@ filterButtons.forEach(button => {
       section.style.display =
         visibleItems.length > 0 ? "block" : "none";
     });
+
+     // 检查当前分类是否有文章
+const visibleArticles = document.querySelectorAll(
+  '#archive-list .archive-item:not([style*="display: none"])'
+);
+
+const emptyMessage = document.getElementById("archive-empty");
+
+if (emptyMessage) {
+  emptyMessage.hidden = visibleArticles.length > 0;
+}
   });
 });
 </script>
