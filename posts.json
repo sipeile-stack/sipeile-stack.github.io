@@ -14,6 +14,14 @@
     "description": "关于人工智能、技术发展与未来生活的一些思考。",
     "file": "posts/ai-and-our-life.md",
     "featured": true
+  },
+  {
+    "title": "这时测试内容",
+    "category": "随笔",
+    "date": "2026-11-23",
+    "description": "这是一条测试的内容",
+    "file": "spl-test-test.md",
+   
   }
 
 
