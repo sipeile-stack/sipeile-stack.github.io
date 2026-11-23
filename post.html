@@ -750,6 +750,31 @@ document.getElementById("reading-time").textContent =
 
 loadArticle();
 
+// 专注阅读模式
+function initFocusMode() {
+  const focusToggle = document.getElementById("focus-toggle");
+
+  if (!focusToggle) {
+    console.error("找不到专注阅读按钮");
+    return;
+  }
+
+  focusToggle.addEventListener("click", () => {
+    document.body.classList.toggle("focus-mode");
+
+    const isFocus =
+      document.body.classList.contains("focus-mode");
+
+    focusToggle.textContent = isFocus ? "退出专注" : "专注";
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFocusMode);
+} else {
+  initFocusMode();
+}
+
   // 文章字体大小调节
 function initFontControls() {
   const content = document.getElementById("content");
