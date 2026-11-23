@@ -324,6 +324,42 @@ content.append(link, category, description);
 }
 
 loadArchive();
+  // 归档分类筛选功能
+const filterButtons = document.querySelectorAll(
+  "#archive-filters button"
+);
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.category;
+
+    // 更新按钮选中状态
+    filterButtons.forEach(item => {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    // 筛选文章
+    document.querySelectorAll(".archive-item").forEach(item => {
+      const match =
+        category === "全部" ||
+        item.dataset.category === category;
+
+      item.style.display = match ? "grid" : "none";
+    });
+
+    // 隐藏没有文章的年份
+    document.querySelectorAll("#archive-list section").forEach(section => {
+      const visibleItems = section.querySelectorAll(
+        '.archive-item:not([style*="display: none"])'
+      );
+
+      section.style.display =
+        visibleItems.length > 0 ? "block" : "none";
+    });
+  });
+});
 </script>
 
 </body>
