@@ -138,5 +138,75 @@
     SPL JOURNAL. · A JOURNAL OF THOUGHTS.
   </footer>
 
+
+<script>
+// SPL JOURNAL 收藏列表
+async function loadFavorites() {
+  const favoriteList = document.getElementById("favorite-list");
+
+  try {
+    // 读取本地收藏记录
+    const favorites = JSON.parse(
+      localStorage.getItem("spl-favorites") || "[]"
+    );
+
+    // 读取网站文章清单
+    const response = await fetch("posts.json");
+
+    if (!response.ok) {
+      throw new Error("文章清单加载失败");
+    }
+
+    const posts = await response.json();
+
+    // 找出已经收藏的文章
+    const favoritePosts = posts.filter(post =>
+      favorites.includes(post.file)
+    );
+
+    favoriteList.innerHTML = "";
+
+    // 没有收藏文章时
+    if (favoritePosts.length === 0) {
+      favoriteList.textContent = "暂时还没有收藏文章，去阅读并收藏一些喜欢的文章吧。";
+      favoriteList.className = "empty";
+      return;
+    }
+
+    // 显示收藏文章
+    favoritePosts.forEach(post => {
+      const item = document.createElement("div");
+      item.className = "favorite-item";
+
+      const link = document.createElement("a");
+
+      link.href = post.file.endsWith(".md")
+        ? "post.html?file=" + encodeURIComponent(post.file)
+        : post.file;
+
+      link.textContent = post.title;
+
+      const meta = document.createElement("div");
+      meta.className = "favorite-meta";
+      meta.textContent =
+        (post.category || "未分类") + " · " +
+        (post.date || "");
+
+      item.appendChild(link);
+      item.appendChild(meta);
+
+      favoriteList.appendChild(item);
+    });
+
+  } catch (error) {
+    favoriteList.textContent = "收藏列表加载失败，请刷新页面重试。";
+    console.error("收藏列表加载失败：", error);
+  }
+}
+
+loadFavorites();
+</script>
+
+
 </body>
 </html>
