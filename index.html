@@ -792,6 +792,11 @@ function renderArticles() {
     return matchesCategory && matchesKeyword;
   });
 
+    // 按发布日期从新到旧排序
+  filteredPosts.sort((a, b) =>
+    new Date(b.date) - new Date(a.date)
+  );
+
   if (filteredPosts.length === 0) {
     container.textContent = "没有找到相关文章。";
     return;
