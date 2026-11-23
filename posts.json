@@ -16,13 +16,22 @@
     "featured": true
   },
  
-
   {
   "title": "这时测试内容",
   "category": "随笔",
   "date": "2026-11-23",
   "description": "这是一条测试的内容",
   "file": "posts/spl-test-test.md"
+}
+
+  ,
+ 
+  {
+  "title": "这是测试内容",
+  "category": "随笔",
+  "date": "2026-11-23",
+  "description": "这是一条测试的内容",
+  "file": "posts/spl-t-t.md"
 }
 
 ]
