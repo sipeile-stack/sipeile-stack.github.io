@@ -610,6 +610,11 @@ if (document.readyState === "loading") {
 function updateReadingProgress() {
   const progressBar = document.getElementById("reading-progress");
 
+  if (!progressBar) {
+    console.error("找不到阅读进度条");
+    return;
+  }
+
   const scrollableHeight =
     document.documentElement.scrollHeight - window.innerHeight;
 
@@ -628,7 +633,11 @@ function updateReadingProgress() {
 window.addEventListener("scroll", updateReadingProgress);
 window.addEventListener("resize", updateReadingProgress);
 
-updateReadingProgress();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", updateReadingProgress);
+} else {
+  updateReadingProgress();
+}
 
 </script>
 <div id="reading-progress"></div>
