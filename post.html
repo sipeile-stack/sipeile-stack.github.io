@@ -462,13 +462,18 @@ tocToggle.addEventListener("click", () => {
   let currentHeading = headings[0];
 
   for (const heading of headings) {
-    const position = heading.getBoundingClientRect().top;
-
-    if (position <= 150) {
+    if (heading.getBoundingClientRect().top <= 150) {
       currentHeading = heading;
-    } else {
-      break;
     }
+  }
+
+  // 如果已经滚动到文章底部，高亮最后一个章节
+  const isAtBottom =
+    window.innerHeight + window.scrollY >=
+    document.documentElement.scrollHeight - 10;
+
+  if (isAtBottom) {
+    currentHeading = headings[headings.length - 1];
   }
 
   tocList.querySelectorAll("a").forEach(link => {
@@ -480,7 +485,9 @@ tocToggle.addEventListener("click", () => {
       'a[href="#' + currentHeading.id + '"]'
     );
 
-    activeLink?.classList.add("active");
+    if (activeLink) {
+      activeLink.classList.add("active");
+    }
   }
 }
 
