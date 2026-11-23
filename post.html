@@ -204,10 +204,20 @@ footer {
 }
 
 .toc-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 15px;
   color: #252525;
+  cursor: pointer;
+  user-select: none;
+}
+
+#toc-arrow {
+  color: #a17b51;
+  font-size: 20px;
 }
 
 .table-of-contents ul {
