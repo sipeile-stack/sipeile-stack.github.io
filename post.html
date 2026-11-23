@@ -248,7 +248,7 @@ footer {
   padding-left: 18px;
 }
 
-  /* 右侧悬浮文章目录 */
+ /* 右侧悬浮文章目录 */
 @media (min-width: 1351px) {
   .table-of-contents {
     position: fixed;
@@ -271,7 +271,9 @@ footer {
     max-height: none;
     box-shadow: none;
   }
-  /* 页面平滑滚动 */
+}
+
+/* 页面平滑滚动 */
 html {
   scroll-behavior: smooth;
 }
@@ -282,11 +284,11 @@ html {
   scroll-margin-top: 100px;
 }
 
-  /* 返回顶部按钮 */
+/* 返回顶部按钮 */
 #back-to-top {
   position: fixed;
-  right: 30px !important;
-  bottom: 30px !important;
+  right: 30px;
+  bottom: 30px;
   width: 44px;
   height: 44px;
   border: none;
@@ -296,7 +298,7 @@ html {
   font-size: 22px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  z-index: 99999 !important;
+  z-index: 99999;
   display: none;
   transition: background 0.3s ease;
 }
@@ -304,14 +306,6 @@ html {
 #back-to-top:hover {
   background: #80603f;
 }
-
-  /* 临时测试：强制显示返回顶部按钮 */
-@media (min-width: 1351px) {
-  #back-to-top {
-    display: block !important;
-  }
-}
-
 
 </style>
 </head>
