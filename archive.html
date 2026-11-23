@@ -147,6 +147,32 @@ footer {
   line-height: 1.7;
   max-width: 620px;
 }
+
+/* 归档分类筛选 */
+.archive-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -25px 0 35px;
+}
+
+.archive-filters button {
+  border: 1px solid #e9e6df;
+  background: transparent;
+  color: #777;
+  padding: 7px 17px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.archive-filters button:hover,
+.archive-filters button.active {
+  background: #a17b51;
+  border-color: #a17b51;
+  color: #fff;
+}
   
 </style>
 </head>
