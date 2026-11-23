@@ -721,7 +721,7 @@ if (document.readyState === "loading") {
   updateReadingProgress();
 }
 
-// 阅读模式切换
+// 阅读模式切换与记忆
 function initThemeToggle() {
   const themeToggle = document.getElementById("theme-toggle");
 
@@ -730,6 +730,18 @@ function initThemeToggle() {
     return;
   }
 
+  // 读取上次保存的阅读模式
+  const savedTheme = localStorage.getItem("spl-theme");
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    themeToggle.textContent = "☀";
+  } else {
+    document.body.classList.remove("dark-mode");
+    themeToggle.textContent = "☾";
+  }
+
+  // 点击切换并保存
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
 
@@ -737,6 +749,11 @@ function initThemeToggle() {
       document.body.classList.contains("dark-mode");
 
     themeToggle.textContent = isDark ? "☀" : "☾";
+
+    localStorage.setItem(
+      "spl-theme",
+      isDark ? "dark" : "light"
+    );
   });
 }
 
