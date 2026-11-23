@@ -283,6 +283,7 @@ heading.textContent = year + " · " + count + " 篇文章";
         groups[year].forEach(post => {
           const item = document.createElement("div");
           item.className = "archive-item";
+          item.dataset.category = post.category || "随笔";
 
           const date = document.createElement("div");
 date.className = "archive-date";
