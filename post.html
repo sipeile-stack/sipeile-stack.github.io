@@ -697,6 +697,55 @@ document.getElementById("reading-time").textContent =
 }
 
 loadArticle();
+
+  // 文章字体大小调节
+function initFontControls() {
+  const content = document.getElementById("content");
+  const decrease = document.getElementById("font-decrease");
+  const reset = document.getElementById("font-reset");
+  const increase = document.getElementById("font-increase");
+
+  if (!content || !decrease || !reset || !increase) {
+    console.error("字体调节按钮初始化失败");
+    return;
+  }
+
+  let fontSize = 16;
+
+  function updateFontSize() {
+    content.style.fontSize = fontSize + "px";
+    localStorage.setItem("spl-font-size", fontSize);
+  }
+
+  const savedSize = Number(localStorage.getItem("spl-font-size"));
+
+  if (savedSize >= 12 && savedSize <= 24) {
+    fontSize = savedSize;
+  }
+
+  updateFontSize();
+
+  decrease.addEventListener("click", () => {
+    fontSize = Math.max(12, fontSize - 1);
+    updateFontSize();
+  });
+
+  increase.addEventListener("click", () => {
+    fontSize = Math.min(24, fontSize + 1);
+    updateFontSize();
+  });
+
+  reset.addEventListener("click", () => {
+    fontSize = 16;
+    updateFontSize();
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFontControls);
+} else {
+  initFontControls();
+}
   // 返回顶部按钮
 function initBackToTop() {
   const backToTop = document.getElementById("back-to-top");
