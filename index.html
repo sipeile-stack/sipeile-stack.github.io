@@ -685,6 +685,7 @@ async function loadArticles() {
     }
 
     const posts = await response.json();
+    console.log("JSON读取成功：", posts);
 
     if (!Array.isArray(posts)) {
       throw new Error("文章清单格式不正确");
