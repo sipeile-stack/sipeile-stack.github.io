@@ -432,6 +432,32 @@ tocToggle.addEventListener("click", () => {
   tocList.style.display = isHidden ? "block" : "none";
   tocArrow.textContent = isHidden ? "−" : "+";
 });
+  function updateActiveHeading() {
+  let currentHeading = null;
+
+  headings.forEach(heading => {
+    if (heading.getBoundingClientRect().top < 150) {
+      currentHeading = heading;
+    }
+  });
+
+  tocList.querySelectorAll("a").forEach(link => {
+    link.classList.remove("active");
+  });
+
+  if (currentHeading) {
+    const activeLink = tocList.querySelector(
+      'a[href="#' + currentHeading.id + '"]'
+    );
+
+    if (activeLink) {
+      activeLink.classList.add("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", updateActiveHeading);
+updateActiveHeading();
 }
     const textContent = content.innerText;
 
