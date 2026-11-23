@@ -376,6 +376,34 @@ async function loadArticle() {
     const html = marked.parse(markdown);
 
     content.innerHTML = DOMPurify.sanitize(html);
+    const headings = content.querySelectorAll("h2, h3");
+
+const toc = document.getElementById("table-of-contents");
+const tocList = document.getElementById("toc-list");
+
+tocList.innerHTML = "";
+
+if (headings.length > 0) {
+  headings.forEach((heading, index) => {
+    const id = "section-" + index;
+
+    heading.id = id;
+
+    const li = document.createElement("li");
+    li.className = heading.tagName.toLowerCase() === "h3"
+      ? "toc-h3"
+      : "toc-h2";
+
+    const link = document.createElement("a");
+    link.href = "#" + id;
+    link.textContent = heading.innerText;
+
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+
+  toc.style.display = "block";
+}
     const textContent = content.innerText;
 
 const chineseCharacters = (
