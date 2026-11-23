@@ -271,6 +271,16 @@ footer {
     max-height: none;
     box-shadow: none;
   }
+  /* 页面平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 章节标题跳转时保留顶部空间 */
+#content h2,
+#content h3 {
+  scroll-margin-top: 100px;
+}
 }
 
 </style>
