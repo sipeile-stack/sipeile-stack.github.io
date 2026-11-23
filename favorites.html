@@ -4,16 +4,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>我的收藏 | SPL JOURNAL</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f8f7f4;
+      color: #252525;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 30px 8%;
+      border-bottom: 1px solid #e5e1da;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    nav {
+      margin-top: 22px;
+    }
+
+    nav a {
+      margin-right: 24px;
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #a17b51;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 0 25px;
+      min-height: 500px;
+    }
+
+    .eyebrow {
+      color: #a17b51;
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 15px 0;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 15px;
+      margin-bottom: 55px;
+    }
+
+    .favorite-item {
+      padding: 25px 0;
+      border-bottom: 1px solid #e5e1da;
+    }
+
+    .favorite-item a {
+      color: #252525;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .favorite-item a:hover {
+      color: #a17b51;
+    }
+
+    .favorite-meta {
+      margin-top: 12px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .empty {
+      padding: 60px 0;
+      color: #999;
+      text-align: center;
+    }
+
+    footer {
+      padding: 35px;
+      text-align: center;
+      color: #999;
+      font-size: 12px;
+      border-top: 1px solid #e5e1da;
+    }
+  </style>
 </head>
+
 <body>
 
-  <h1>SPL JOURNAL.</h1>
-  <p>MY FAVORITES</p>
+  <header>
+    <div class="logo">SPL JOURNAL.</div>
 
-  <h2>我的收藏</h2>
-  <p>这里保存你喜欢的文章。</p>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="index.html#articles">文章</a>
+      <a href="archive.html">归档</a>
+      <a href="favorites.html">我的收藏</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="eyebrow">MY COLLECTION</div>
+
+    <h1>我的收藏</h1>
+
+    <p class="subtitle">
+      收藏值得反复阅读的文字。
+    </p>
+
+    <div id="favorite-list">
+      <div class="empty">收藏列表正在准备中……</div>
+    </div>
+  </main>
+
+  <footer>
+    SPL JOURNAL. · A JOURNAL OF THOUGHTS.
+  </footer>
 
 </body>
 </html>
-
