@@ -436,13 +436,15 @@ tocToggle.addEventListener("click", () => {
   function updateActiveHeading() {
   let currentHeading = headings[0];
 
-  headings.forEach(heading => {
+  for (const heading of headings) {
     const position = heading.getBoundingClientRect().top;
 
-    if (position <= window.innerHeight * 0.4) {
+    if (position <= 150) {
       currentHeading = heading;
+    } else {
+      break;
     }
-  });
+  }
 
   tocList.querySelectorAll("a").forEach(link => {
     link.classList.remove("active");
@@ -453,13 +455,13 @@ tocToggle.addEventListener("click", () => {
       'a[href="#' + currentHeading.id + '"]'
     );
 
-    if (activeLink) {
-      activeLink.classList.add("active");
-    }
+    activeLink?.classList.add("active");
   }
 }
 
 window.addEventListener("scroll", updateActiveHeading);
+window.addEventListener("resize", updateActiveHeading);
+
 updateActiveHeading();
 }
     const textContent = content.innerText;
