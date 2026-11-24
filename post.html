@@ -1131,6 +1131,10 @@ function initGiscus() {
   script.setAttribute("data-lang", "zh-CN");
 
   container.appendChild(script);
+  // 等待 Giscus 加载后同步当前主题
+script.addEventListener("load", () => {
+  setTimeout(syncGiscusTheme, 500);
+});
 }
 
 if (document.readyState === "loading") {
