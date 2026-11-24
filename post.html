@@ -1015,6 +1015,7 @@ function initFavorite() {
     }
 
     localStorage.setItem(
+  
       storageKey,
       JSON.stringify(favorites)
     );
@@ -1308,6 +1309,7 @@ function initThemeToggle() {
       "spl-theme",
       isDark ? "dark" : "light"
     );
+    syncGiscusTheme();
   });
 }
   // SPL JOURNAL V10.1：同步 Giscus 评论区主题
