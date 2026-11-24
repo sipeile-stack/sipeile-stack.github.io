@@ -1024,6 +1024,37 @@ if (document.readyState === "loading") {
 } else {
   initFavorite();
 }
+  // SPL JOURNAL V9.0 文章分享功能
+function initShare() {
+  const shareButton =
+    document.getElementById("share-toggle");
+
+  if (!shareButton) return;
+
+  shareButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(
+        window.location.href
+      );
+
+      shareButton.textContent = "✓ 已复制";
+
+      setTimeout(() => {
+        shareButton.textContent = "↗ 分享";
+      }, 2000);
+
+    } catch (error) {
+      console.error("复制链接失败：", error);
+      shareButton.textContent = "复制失败";
+    }
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initShare);
+} else {
+  initShare();
+}
 
 // 专注阅读模式
 function initFocusMode() {
