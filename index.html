@@ -874,6 +874,40 @@ readingTime.textContent = "正在计算阅读时间...";
 
 card.append(category, title, description, date, readingTime);
 container.appendChild(card);
+    if (post.file.endsWith(".md")) {
+  fetch(post.file)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("文章读取失败");
+      }
+      return response.text();
+    })
+    .then(text => {
+      const chineseCharacters = (
+        text.match(/[\u4e00-\u9fff]/g) || []
+      ).length;
+
+      const englishWords = (
+        text.match(/[a-zA-Z0-9]+/g) || []
+      ).length;
+
+      const totalWords = chineseCharacters + englishWords;
+
+      const readingMinutes = Math.max(
+        1,
+        Math.ceil(totalWords / 300)
+      );
+
+      readingTime.textContent =
+        readingMinutes + " MIN READ";
+    })
+    .catch(error => {
+      console.error("阅读时间计算失败：", error);
+      readingTime.textContent = "";
+    });
+} else {
+  readingTime.textContent = "";
+}
   });
 }
 
