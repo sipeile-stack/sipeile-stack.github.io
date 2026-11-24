@@ -630,6 +630,37 @@ validPosts.sort((a, b) =>
     const previous = validPosts[index - 1];
     const next = validPosts[index + 1];
 
+    // 自动推荐另外两篇文章
+const relatedList = document.getElementById("related-list");
+
+if (relatedList) {
+  const recommendedPosts = validPosts
+    .filter(post => post.file !== currentFile)
+    .slice(0, 2);
+
+  recommendedPosts.forEach(post => {
+    const card = document.createElement("a");
+    card.className = "related-card";
+
+    card.href = post.file.endsWith(".md")
+      ? "post.html?file=" + encodeURIComponent(post.file)
+      : post.file;
+
+    const category = document.createElement("span");
+    category.className = "related-category";
+    category.textContent = post.category || "随笔";
+
+    const title = document.createElement("h3");
+    title.textContent = post.title || "未命名文章";
+
+    const description = document.createElement("p");
+    description.textContent = post.description || "";
+
+    card.append(category, title, description);
+    relatedList.appendChild(card);
+  });
+}
+
     function createLink(post, label) {
       if (!post) return null;
 
