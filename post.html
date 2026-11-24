@@ -1025,6 +1025,7 @@ if (document.readyState === "loading") {
   initFavorite();
 }
   // SPL JOURNAL V9.0 文章分享功能
+// SPL JOURNAL V9.1 原生分享功能
 function initShare() {
   const shareButton =
     document.getElementById("share-toggle");
@@ -1032,6 +1033,32 @@ function initShare() {
   if (!shareButton) return;
 
   shareButton.addEventListener("click", async () => {
+    const shareData = {
+      title: document.title,
+      text: "推荐阅读：",
+      url: window.location.href
+    };
+
+    // 支持原生分享的设备
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        shareButton.textContent = "✓ 分享成功";
+
+        setTimeout(() => {
+          shareButton.textContent = "↗ 分享";
+        }, 2000);
+
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("分享失败：", error);
+        }
+      }
+
+      return;
+    }
+
+    // 不支持原生分享时，使用复制链接
     try {
       await navigator.clipboard.writeText(
         window.location.href
