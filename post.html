@@ -540,6 +540,89 @@ body.dark-mode #favorite-toggle.is-favorite {
   color: #ffffff;
 }
 
+  /* V8.9 文章推荐区域 */
+.related-posts {
+  margin: 70px 0 45px;
+  padding-top: 35px;
+  border-top: 1px solid #e9e6df;
+}
+
+.related-posts h2 {
+  margin: 0;
+  color: #292929;
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.related-subtitle {
+  margin: 9px 0 25px;
+  color: #a17b51;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.related-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.related-card {
+  display: block;
+  padding: 25px;
+  background: #f7f5f1;
+  border: 1px solid #eeeae3;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  border-color: #d8c8b5;
+}
+
+.related-category {
+  color: #a17b51;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.related-card h3 {
+  margin: 12px 0;
+  color: #292929;
+  font-size: 18px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.related-card:hover h3 {
+  color: #a17b51;
+}
+
+.related-card p {
+  margin: 0;
+  color: #888;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  .related-list {
+    grid-template-columns: 1fr;
+  }
+
+  .related-card {
+    padding: 22px;
+  }
+}
+
 </style>
 </head>
 
