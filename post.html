@@ -1127,14 +1127,22 @@ function initGiscus() {
   script.setAttribute("data-reactions-enabled", "1");
   script.setAttribute("data-emit-metadata", "0");
   script.setAttribute("data-input-position", "bottom");
-  script.setAttribute("data-theme", "light");
+  
   script.setAttribute("data-lang", "zh-CN");
+  // 读取上次保存的主题
+const initialTheme =
+  localStorage.getItem("spl-theme") === "dark"
+    ? "dark"
+    : "light";
 
-  container.appendChild(script);
-  // 等待 Giscus 加载后同步当前主题
+script.setAttribute("data-theme", initialTheme);
+
+// 等待 Giscus 加载后再次同步主题
 script.addEventListener("load", () => {
   setTimeout(syncGiscusTheme, 500);
 });
+
+container.appendChild(script);
 }
 
 if (document.readyState === "loading") {
