@@ -610,6 +610,11 @@ async function loadPostNavigation(currentFile) {
       /\.(md|html)$/i.test(post.file)
     );
 
+    // 按发布日期从新到旧排序
+validPosts.sort((a, b) =>
+  new Date(b.date) - new Date(a.date)
+);
+
     const index = validPosts.findIndex(
       post => post.file === currentFile
     );
