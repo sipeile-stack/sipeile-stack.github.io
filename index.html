@@ -868,8 +868,12 @@ if (post.date) {
   date.textContent = "";
 }
 
-    card.append(category, title, description, date);
-    container.appendChild(card);
+    const readingTime = document.createElement("div");
+readingTime.className = "reading-time";
+readingTime.textContent = "正在计算阅读时间...";
+
+card.append(category, title, description, date, readingTime);
+container.appendChild(card);
   });
 }
 
