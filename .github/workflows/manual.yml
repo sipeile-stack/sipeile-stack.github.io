@@ -56,3 +56,30 @@ jobs:
 
           print(f"Successfully checked {len(posts)} article files.")
           PY
+                - name: Check required article fields
+          run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          posts = json.loads(
+              Path("posts.json").read_text(encoding="utf-8")
+          )
+
+          required_fields = [
+              "title",
+              "category",
+              "date",
+              "description",
+              "file"
+          ]
+
+          for index, post in enumerate(posts, start=1):
+              for field in required_fields:
+                  if not isinstance(post.get(field), str) or not post[field].strip():
+                      raise SystemExit(
+                          f"Article {index} is missing or has an empty field: {field}"
+                      )
+
+          print("All article fields are complete.")
+          PY
