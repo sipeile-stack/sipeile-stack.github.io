@@ -182,3 +182,6 @@ jobs:
       - name: Check article category formatting
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("category"),str) or p["category"] != p["category"].strip()]; [print("Article "+i+" has extra spaces in category.") for i in invalid]; print("All article categories are properly formatted.") if not invalid else None; raise SystemExit(bool(invalid))'
+      - name: Check duplicate article file paths
+        run: |
+          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); files=[p["file"].strip() for p in posts]; duplicates=sorted({f for f in files if files.count(f)>1}); [print("Duplicate article file path: "+f) for f in duplicates]; print("All article file paths are unique.") if not duplicates else None; raise SystemExit(bool(duplicates))'
