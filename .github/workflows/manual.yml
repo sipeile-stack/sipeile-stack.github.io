@@ -30,3 +30,29 @@ jobs:
 
       - name: Check posts.json format
         run: python -m json.tool posts.json > /dev/null
+      - name: Check article files
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          posts = json.loads(
+              Path("posts.json").read_text(encoding="utf-8")
+          )
+
+          for post in posts:
+              file = post.get("file")
+
+              if (
+                  not isinstance(file, str)
+                  or not file.startswith("posts/")
+                  or not file.endswith(".md")
+                  or ".." in Path(file).parts
+              ):
+                  raise SystemExit(f"Invalid article path: {file}")
+
+              if not Path(file).is_file():
+                  raise SystemExit(f"Missing article file: {file}")
+
+          print(f"Successfully checked {len(posts)} article files.")
+          PY
