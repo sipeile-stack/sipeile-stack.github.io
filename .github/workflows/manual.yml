@@ -163,4 +163,29 @@ jobs:
 
           print("All article titles are unique.")
           PY
+      - name: Check article descriptions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          posts = json.loads(
+              Path("posts.json").read_text(encoding="utf-8")
+          )
+
+          for index, post in enumerate(posts, start=1):
+              description = post.get("description", "")
+
+              if not isinstance(description, str) or not description.strip():
+                  raise SystemExit(
+                      f"Article {index} has an empty description."
+                  )
+
+              if len(description.strip()) > 200:
+                  raise SystemExit(
+                      f"Article {index} description exceeds 200 characters."
+                  )
+
+          print("All article descriptions are valid.")
+          PY          
  
