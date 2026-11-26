@@ -194,3 +194,6 @@ jobs:
       - name: Check article date validity
         run: |
           python -c 'import json; from pathlib import Path; from datetime import date; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); [date.fromisoformat(p["date"]) for p in posts]; print("All article dates are valid calendar dates.")'
+      - name: Check article title whitespace
+        run: |
+          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if any(c in p["title"] for c in "\n\r\t")]; [print("Article "+i+" title contains invalid whitespace.") for i in invalid]; print("All article titles have valid whitespace.") if not invalid else None; raise SystemExit(bool(invalid))'
