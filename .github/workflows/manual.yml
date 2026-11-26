@@ -136,4 +136,31 @@ jobs:
 
           print("All article categories are valid.")
           PY
+      - name: Check duplicate article titles
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          posts = json.loads(
+              Path("posts.json").read_text(encoding="utf-8")
+          )
+
+          titles = [
+              post["title"].strip()
+              for post in posts
+          ]
+
+          if len(titles) != len(set(titles)):
+              seen = set()
+
+              for title in titles:
+                  if title in seen:
+                      raise SystemExit(
+                          f"Duplicate article title: {title}"
+                      )
+                  seen.add(title)
+
+          print("All article titles are unique.")
+          PY
  
