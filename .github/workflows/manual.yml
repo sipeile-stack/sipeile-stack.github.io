@@ -165,27 +165,4 @@ jobs:
           PY
       - name: Check article descriptions
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          posts = json.loads(
-              Path("posts.json").read_text(encoding="utf-8")
-          )
-
-          for index, post in enumerate(posts, start=1):
-              description = post.get("description", "")
-
-              if not isinstance(description, str) or not description.strip():
-                  raise SystemExit(
-                      f"Article {index} has an empty description."
-                  )
-
-              if len(description.strip()) > 200:
-                  raise SystemExit(
-                      f"Article {index} description exceeds 200 characters."
-                  )
-
-          print("All article descriptions are valid.")
-          PY          
- 
+          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); errors=[f"Article {i} has an invalid description." for i,p in enumerate(posts,1) if not isinstance(p.get("description"),str) or not p["description"].strip() or len(p["description"].strip())>200]; [print(e) for e in errors]; print("All article descriptions are valid.") if not errors else None; raise SystemExit(bool(errors))'
