@@ -33,7 +33,10 @@ jobs:
       - name: Check article list structure
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); assert isinstance(posts,list), "posts.json must contain a JSON array."; invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p,dict)]; [print("Article entry "+i+" is not a JSON object.") for i in invalid]; assert not invalid, "Every article entry must be a JSON object."; print("All article entries have a valid structure.")'
-        
+      - name: Check article count
+        run: |
+          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); count=len(posts) if isinstance(posts,list) else 0; print("Article count:",count); assert 1 <= count <= 500, "Article list must contain between 1 and 500 articles."'
+     
       - name: Check article files
         run: |
           python - <<'PY'
@@ -201,8 +204,5 @@ jobs:
       - name: Check article title whitespace
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if any(c in p["title"] for c in "\n\r\t")]; [print("Article "+i+" title contains invalid whitespace.") for i in invalid]; print("All article titles have valid whitespace.") if not invalid else None; raise SystemExit(bool(invalid))'
-      - name: Check article count
-        run: |
-          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); count=len(posts) if isinstance(posts,list) else 0; print("Article count:",count); assert 1 <= count <= 500, "Article list must contain between 1 and 500 articles."'
      
      
