@@ -56,8 +56,9 @@ jobs:
 
           print(f"Successfully checked {len(posts)} article files.")
           PY
-                - name: Check required article fields
-          run: |
+
+      - name: Check required article fields
+        run: |
           python - <<'PY'
           import json
           from pathlib import Path
@@ -83,3 +84,4 @@ jobs:
 
           print("All article fields are complete.")
           PY
+ 
