@@ -170,3 +170,6 @@ jobs:
       - name: Check article content
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); errors=["Article "+str(p.get("file"))+" is missing or empty." for p in posts if not isinstance(p.get("file"),str) or not Path(p["file"]).is_file() or not Path(p["file"]).read_text(encoding="utf-8").strip()]; [print(e) for e in errors]; print("All article files contain content.") if not errors else None; raise SystemExit(bool(errors))'
+      - name: Check featured article settings
+        run: |
+          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if "featured" in p and not isinstance(p["featured"],bool)]; featured=[str(p.get("title","(untitled)")) for p in posts if p.get("featured") is True]; [print("Invalid featured field in article "+i) for i in invalid]; print("Multiple featured articles: "+", ".join(featured)) if len(featured)>1 else None; print("Featured article settings are valid.") if not invalid and len(featured)<=1 else None; raise SystemExit(bool(invalid) or len(featured)>1)'
