@@ -109,4 +109,31 @@ jobs:
 
           print("All article dates are valid.")
           PY
+      - name: Check article categories
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          posts = json.loads(
+              Path("posts.json").read_text(encoding="utf-8")
+          )
+
+          allowed_categories = {
+              "科技",
+              "生活",
+              "思考",
+              "随笔"
+          }
+
+          for index, post in enumerate(posts, start=1):
+              category = post.get("category")
+
+              if category not in allowed_categories:
+                  raise SystemExit(
+                      f"Article {index} has an invalid category: {category}"
+                  )
+
+          print("All article categories are valid.")
+          PY
  
