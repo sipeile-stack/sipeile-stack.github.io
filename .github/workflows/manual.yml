@@ -84,4 +84,29 @@ jobs:
 
           print("All article fields are complete.")
           PY
+      - name: Check article date format
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime
+
+          posts = json.loads(
+              Path("posts.json").read_text(encoding="utf-8")
+          )
+
+          for index, post in enumerate(posts, start=1):
+              date = post.get("date", "")
+
+              try:
+                  parsed = datetime.strptime(date, "%Y-%m-%d")
+                  if parsed.strftime("%Y-%m-%d") != date:
+                      raise ValueError
+              except (ValueError, TypeError):
+                  raise SystemExit(
+                      f"Article {index} has an invalid date: {date}"
+                  )
+
+          print("All article dates are valid.")
+          PY
  
