@@ -145,31 +145,7 @@ jobs:
           PY
       - name: Check duplicate article titles
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          posts = json.loads(
-              Path("posts.json").read_text(encoding="utf-8")
-          )
-
-          titles = [
-              post["title"].strip()
-              for post in posts
-          ]
-
-          if len(titles) != len(set(titles)):
-              seen = set()
-
-              for title in titles:
-                  if title in seen:
-                      raise SystemExit(
-                          f"Duplicate article title: {title}"
-                      )
-                  seen.add(title)
-
-          print("All article titles are unique.")
-          PY
+          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("title"),str) or not p["title"].strip() or p["title"]!=p["title"].strip()]; titles=[p["title"].strip() for p in posts if isinstance(p.get("title"),str) and p["title"].strip()]; duplicates=sorted({t for t in titles if titles.count(t)>1}); [print("Article "+i+" has an invalid title.") for i in invalid]; [print("Duplicate article title: "+t) for t in duplicates]; assert not invalid and not duplicates, "Article titles must be non-empty, properly formatted, and unique."; print("All article titles are valid and unique.")'
       - name: Check article descriptions
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); errors=[f"Article {i} has an invalid description." for i,p in enumerate(posts,1) if not isinstance(p.get("description"),str) or not p["description"].strip() or len(p["description"].strip())>200]; [print(e) for e in errors]; print("All article descriptions are valid.") if not errors else None; raise SystemExit(bool(errors))'
