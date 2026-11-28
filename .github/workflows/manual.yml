@@ -201,3 +201,52 @@ jobs:
 
           print("All required images exist and are not empty.")
           PY
+
+      - name: Check HTML page structure
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          html_files = [
+              "index.html",
+              "post.html",
+              "archive.html",
+              "favorites.html"
+          ]
+
+          required_tags = [
+              "<html",
+              "</html>",
+              "<head",
+              "</head>",
+              "<body",
+              "</body>"
+          ]
+
+          for file in html_files:
+              path = Path(file)
+
+              if not path.is_file():
+                  raise SystemExit(f"HTML page does not exist: {file}")
+
+              content = path.read_text(encoding="utf-8").lower()
+
+              if "<!doctype html>" not in content:
+                  raise SystemExit(f"Missing DOCTYPE in {file}")
+
+              for tag in required_tags:
+                  if tag not in content:
+                      raise SystemExit(
+                          f"Missing {tag} in {file}"
+                      )
+
+              if '<meta charset="utf-8">' not in content and \
+                 "<meta charset='utf-8'>" not in content:
+                  raise SystemExit(
+                      f"Missing UTF-8 charset declaration in {file}"
+                  )
+
+              print(f"HTML structure check passed: {file}")
+
+          print("All HTML pages passed the structure check.")
+          PY
