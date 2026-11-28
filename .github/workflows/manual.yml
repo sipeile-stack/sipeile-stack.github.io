@@ -177,4 +177,27 @@ jobs:
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if any(c in p["title"] for c in "\n\r\t")]; [print("Article "+i+" title contains invalid whitespace.") for i in invalid]; print("All article titles have valid whitespace.") if not invalid else None; raise SystemExit(bool(invalid))'
      
-     
+      - name: Check required images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          required_images = [
+              "images/ai-featured.jpg"
+          ]
+
+          for image in required_images:
+              image_path = Path(image)
+
+              if not image_path.is_file():
+                  raise SystemExit(
+                      f"Required image does not exist: {image}"
+                  )
+
+              if image_path.stat().st_size == 0:
+                  raise SystemExit(
+                      f"Required image is empty: {image}"
+                  )
+
+          print("All required images exist and are not empty.")
+          PY
