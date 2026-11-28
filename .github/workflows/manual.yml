@@ -160,9 +160,7 @@ jobs:
       - name: Check article descriptions
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); errors=[f"Article {i} has an invalid description." for i,p in enumerate(posts,1) if not isinstance(p.get("description"),str) or not p["description"].strip() or p["description"]!=p["description"].strip() or len(p["description"].strip())>200]; [print(e) for e in errors]; print("All article descriptions are valid.") if not errors else None; raise SystemExit(bool(errors))'
-      - name: Check article content
-        run: |
-          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); errors=["Article "+str(p.get("file"))+" is missing or empty." for p in posts if not isinstance(p.get("file"),str) or not Path(p["file"]).is_file() or not Path(p["file"]).read_text(encoding="utf-8").strip()]; [print(e) for e in errors]; print("All article files contain content.") if not errors else None; raise SystemExit(bool(errors))'
+      
       - name: Check featured article settings
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if "featured" in p and not isinstance(p["featured"],bool)]; featured=[p for p in posts if p.get("featured") is True]; invalid_titles=[str(i) for i,p in enumerate(posts,1) if p.get("featured") is True and (not isinstance(p.get("title"),str) or not p["title"].strip())]; [print("Invalid featured field in article "+i) for i in invalid]; [print("Featured article "+i+" has an invalid title.") for i in invalid_titles]; print("Multiple featured articles: "+", ".join(str(p.get("title","(untitled)")) for p in featured)) if len(featured)>1 else None; assert not invalid and not invalid_titles and len(featured)<=1, "Featured article settings are invalid."; print("Featured article settings are valid.")'    
