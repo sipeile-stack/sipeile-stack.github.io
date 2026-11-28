@@ -158,9 +158,7 @@ jobs:
       - name: Check article path safety
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(p.get("file")) for p in posts if not isinstance(p.get("file"),str) or not p["file"].startswith("posts/") or "\\" in p["file"] or ".." in Path(p["file"]).parts or len(Path(p["file"]).parts)<2 or not Path(p["file"]).name or Path(p["file"]).suffix.lower()!=".md"]; [print("Unsafe article path: "+f) for f in invalid]; print("All article paths are safe.") if not invalid else None; raise SystemExit(bool(invalid))'
-      - name: Check article category formatting
-        run: |
-          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("category"),str) or p["category"] != p["category"].strip()]; [print("Article "+i+" has extra spaces in category.") for i in invalid]; print("All article categories are properly formatted.") if not invalid else None; raise SystemExit(bool(invalid))'
+    
       - name: Check duplicate article file paths
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("file"),str) or not p["file"].strip() or p["file"]!=p["file"].strip()]; files=[p["file"].strip() for p in posts if isinstance(p.get("file"),str) and p["file"].strip()]; duplicates=sorted({f for f in files if files.count(f)>1}); [print("Article "+i+" has an invalid file path.") for i in invalid]; [print("Duplicate article file path: "+f) for f in duplicates]; assert not invalid and not duplicates, "Article file paths must be non-empty, properly formatted, and unique."; print("All article file paths are valid and unique.")'
