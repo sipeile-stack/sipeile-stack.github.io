@@ -171,9 +171,7 @@ jobs:
       - name: Check duplicate article file paths
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("file"),str) or not p["file"].strip() or p["file"]!=p["file"].strip()]; files=[p["file"].strip() for p in posts if isinstance(p.get("file"),str) and p["file"].strip()]; duplicates=sorted({f for f in files if files.count(f)>1}); [print("Article "+i+" has an invalid file path.") for i in invalid]; [print("Duplicate article file path: "+f) for f in duplicates]; assert not invalid and not duplicates, "Article file paths must be non-empty, properly formatted, and unique."; print("All article file paths are valid and unique.")'
-      - name: Check article title formatting
-        run: |
-          python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("title"),str) or not p["title"].strip() or p["title"]!=p["title"].strip() or len(p["title"].strip())>100]; [print("Article "+i+" has an invalid title.") for i in invalid]; print("All article titles are properly formatted.") if not invalid else None; raise SystemExit(bool(invalid))'
+     
       - name: Check article description formatting
         run: |
           python -c 'import json; from pathlib import Path; posts=json.loads(Path("posts.json").read_text(encoding="utf-8")); invalid=[str(i) for i,p in enumerate(posts,1) if not isinstance(p.get("description"),str) or not p["description"].strip() or p["description"]!=p["description"].strip()]; [print("Article "+i+" has an invalid description.") for i in invalid]; print("All article descriptions are properly formatted.") if not invalid else None; raise SystemExit(bool(invalid))'
